@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Category</title>
+</head>
+<body>
+  <ul class="cats">
+  <% for(var i=0; i<cats.length; i++) { %>
+    <li class="cat">
+      <span><%= cats[i].name %></span>
+    </li>
+  <% } %>
+  </ul>
+
+  <hr/>
+  <h3>Category</h3>
+  <form action="/post_category" method="POST">
+    <input type="text" placeholder="name" name="name"><br/>
+    <button type="submit">Submit</button>
+  </form>
+</body>
+</html>

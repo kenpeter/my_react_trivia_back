@@ -1,27 +1,12 @@
-const express = require('express');
-const bodyParser= require('body-parser');
-const app = express();
-const MongoClient = require('mongodb').MongoClient;
+// a serial of connect actions
+require("./database");
 
+var express = require('express');
+var bodyParser= require('body-parser');
+var app = express();
 
-var db;
-
-// mongo client
-// client
-// 
-MongoClient.connect('mongodb://my-crud-express-mongodb:my-crud-express-mongodb@ds157298.mlab.com:57298/my-crud-express-mongodb', (err, database) => {
-  if (err) {
-    console.log("---- my error ----");
-    return console.log(err);
-  }  
-    
-  db = database;
-  
-  app.listen(3000, () => {
-    console.log('listening on 3000');
-  });
-  
-});
+// user
+var CatQuestion = require('./models/CatQuestion');
 
 
 // extract form data then add to the body of request
@@ -30,14 +15,108 @@ app.use(bodyParser.urlencoded({extended: true}));
 //
 app.set('view engine', 'ejs');
 
-// post quotes
-// req, res
-app.post('/quotes', (req, res) => {
+
+
+var catQuestion = new CatQuestion({
+  name: "cat 1",
+  
+  questions: [{
+    points: "100",
+    question: "q 1",
+    answer: "a 1"
+  }, {
+    points: "200",
+    question: "q 2",
+    answer: "a 2"
+  }, {
+    points: "300",
+    question: "q 3",
+    answer: "a 3"
+  }]
+});
+
+
+// save 
+catQuestion.save(function(error) {
+  if (!error) {
+    // Post find all, need class
+    CatQuestion.find({})
+    .exec(function(error, catQuestions) {
+      console.log(JSON.stringify(catQuestions, null, "\t"))
+    })
+  }
+  else {
+  
+  }
+});
+
+
+
+
+
+/*
+// get first
+app.get('/category', (req, res) => {
+  db.collection('my_react_trivia_category').find().toArray((err, result) => {
+    if (err) return console.log(err);
+    // renders index.ejs
+    res.render('category.ejs', {cats: result});
+  });
+});
+
+
+// post 2nd
+app.post('/post_category', (req, res) => {
   // db collection
   // quotes
   // save
   // req.body
-  db.collection('quotes').save(req.body, (err, result) => {
+  db.collection('my_react_trivia_category').save(req.body, (err, result) => {
+    // error 
+    if (err) return console.log(err);
+
+    // save db
+    console.log('saved to database');
+    
+    // redirect
+    res.redirect('/category');
+  });
+});
+
+
+// get first
+app.get('/question', (req, res) => {
+  
+  db.collection('my_react_trivia_question').find().toArray((err, res_qs) => {
+    // error
+    if (err)
+      return console.log(err);
+    
+    db.collection('my_react_trivia_category').find().toArray((err, res_cats) => {
+      if (err)
+        return console.log(err);
+
+      
+      //test
+      //console.log(res_qs);
+      //console.log(res_cats);
+      
+
+      res.render('question.ejs', {qs: res_qs, cats: res_cats});
+    });
+    
+    
+  });
+});
+
+
+// post 2nd
+app.post('/post_question', (req, res) => {
+  // db collection
+  // quotes
+  // save
+  // req.body
+  db.collection('my_react_trivia_question').save(req.body, (err, result) => {
     // error 
     if (err) return console.log(err)
 
@@ -45,10 +124,15 @@ app.post('/quotes', (req, res) => {
     console.log('saved to database');
     
     // redirect
-    res.redirect('/');
+    res.redirect('/question');
   });
 });
 
+
+// https://expressjs.com/en/api.html#res.json
+app.get('/cat_q.json', (req, res) => {
+  res.json({ user: 'tobi' });
+});
 
 // app get /
 // req res
@@ -57,5 +141,8 @@ app.get('/', (req, res) => {
     if (err) return console.log(err)
     // renders index.ejs
     res.render('index.ejs', {quotes: result})
-  })
-})
+  });
+});
+*/
+
+

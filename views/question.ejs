@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Question</title>
+</head>
+<body>
+
+  <ul class="qs">
+  <% for(var i=0; i<qs.length; i++) { %>
+    <li class="q">
+      <span><%= qs[i].points %></span>
+      <span><%= qs[i].question %></span>
+      <span><%= qs[i].answer %></span>
+    </li>
+  <% } %>
+  </ul>
+
+  <hr/>
+  <h3>form</h3>
+  <form action="/post_question" method="POST">
+    
+  
+    <select name="cat">
+      <% for(var i=0; i < cats.length; i++) { %>
+        <option value="<%= cats[i]._id %>"><%= cats[i].name %></option>
+      <% } %>
+    </select>
+    <br/><br/>
+  
+    <input type="text" placeholder="points" name="points"><br/><br/>
+    <textarea placeholder="question" name="question"></textarea><br/><br/>
+    <textarea placeholder="answer" name="answer"></textarea><br/><br/>
+    <button type="submit">Submit</button>
+  </form>
+</body>
+</html>

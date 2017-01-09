@@ -16,6 +16,19 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 
 
+// http://mongoosejs.com/docs/queries.html
+app.get('/cat_question.json', (req, res) => {
+  CatQuestion.find({}, function(err, catQuestions){
+    res.json(catQuestions);
+  });
+});
+
+
+app.get('/', (req, res) => {
+  res.json({success: true});
+});
+
+app.listen(3000);
 
 /*
 // get first

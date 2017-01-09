@@ -8,6 +8,12 @@ var app = express();
 // user
 var CatQuestion = require('./models/CatQuestion');
 
+// http://enable-cors.org/server_expressjs.html
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 // extract form data then add to the body of request
 app.use(bodyParser.urlencoded({extended: true}));
@@ -28,6 +34,7 @@ app.get('/', (req, res) => {
   res.json({success: true});
 });
 
+// listen to 3000
 app.listen(3000);
 
 /*
@@ -48,12 +55,12 @@ app.post('/post_category', (req, res) => {
   // save
   // req.body
   db.collection('my_react_trivia_category').save(req.body, (err, result) => {
-    // error 
+    // error
     if (err) return console.log(err);
 
     // save db
     console.log('saved to database');
-    
+
     // redirect
     res.redirect('/category');
   });
@@ -62,26 +69,26 @@ app.post('/post_category', (req, res) => {
 
 // get first
 app.get('/question', (req, res) => {
-  
+
   db.collection('my_react_trivia_question').find().toArray((err, res_qs) => {
     // error
     if (err)
       return console.log(err);
-    
+
     db.collection('my_react_trivia_category').find().toArray((err, res_cats) => {
       if (err)
         return console.log(err);
 
-      
+
       //test
       //console.log(res_qs);
       //console.log(res_cats);
-      
+
 
       res.render('question.ejs', {qs: res_qs, cats: res_cats});
     });
-    
-    
+
+
   });
 });
 
@@ -93,12 +100,12 @@ app.post('/post_question', (req, res) => {
   // save
   // req.body
   db.collection('my_react_trivia_question').save(req.body, (err, result) => {
-    // error 
+    // error
     if (err) return console.log(err)
 
     // save db
     console.log('saved to database');
-    
+
     // redirect
     res.redirect('/question');
   });
@@ -120,5 +127,3 @@ app.get('/', (req, res) => {
   });
 });
 */
-
-

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm run dev",
+    "start": "forever start -a -l forever.log -o out.log -e err.log ./my_react_trivia_back_server.js",
+    "stop": "forever stop ./my_react_trivia_back_server.js",
     "dev": "nodemon server.js"
   },
   "author": "",

@@ -9,6 +9,7 @@ var CatQuestionSchema = new mongoose.Schema({
     points: {type: String, required: true},
     question: {type: String, required: true},
     answer: {type: String, required: true},
+    img_name: {type: String, required: true}
   }]
 });
 

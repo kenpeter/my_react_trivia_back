@@ -90,7 +90,7 @@ CatQuestion.remove({}, function(err) {
       questions: [{
         points: "100",
         question: "Who is this?",
-        answer: "Rina Mayuzumi.jpg",
+        answer: "Rina Mayuzumi",
         img_name: "rina-mayuzumi.jpg"
       }, {
         points: "200",
